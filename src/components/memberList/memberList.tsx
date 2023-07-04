@@ -1,8 +1,14 @@
-import { component$,useTask$,useStore,useVisibleTask$ } from "@builder.io/qwik";
+import { component$,useTask$,useStore,useVisibleTask$,useContext } from "@builder.io/qwik";
 import { isServer } from '@builder.io/qwik/build';
 import type { PropFunction } from "@builder.io/qwik"
 
+interface propsFilter{
+	id : string
+	name : string
+	phone : string
+}
 export interface PropsData {
+	propsFilter : propsFilter
   isShow : boolean
   toPage : number
   data : PropFunction<(data : resData)=>void>
@@ -13,8 +19,8 @@ export interface resData{
 	totalPage:number
 	currentPage:number
 }
-
 export const MemberList = component$((props : PropsData) => {
+	// const filter = useContext(filterContext);
   const store = useStore({ data :null });
   useTask$(async ({track}) => {
     track(()=>{props.toPage})
