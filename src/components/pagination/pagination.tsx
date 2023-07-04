@@ -4,7 +4,7 @@ import type { PropFunction } from "@builder.io/qwik"
 export interface PaginationProps {
   totalPage : number
   currentPage : number
-  toPage : PropFunction<(num : number)=>number>
+  toPage : PropFunction<(num : number)=>void>
 }
 
 export const Pagination = component$<PaginationProps>((props:PaginationProps) =>{
@@ -22,7 +22,7 @@ export const Pagination = component$<PaginationProps>((props:PaginationProps) =>
         pages.push(
           <button key={i}
             onClick$={()=> props.toPage(i)}
-            class={[`relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-600 hover:text-neutral-100`,{
+            class={[`relative block rounded px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-600 hover:text-neutral-100`,{
               'bg-gray-500 text-white' : i == currPage.value ,
             }]}
           >
@@ -33,7 +33,7 @@ export const Pagination = component$<PaginationProps>((props:PaginationProps) =>
         pages.push(
           <button key={i}
             onClick$={()=> props.toPage(i)}
-            class={[`relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-600 hover:text-neutral-100`,{
+            class={[`relative block rounded px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-600 hover:text-neutral-100`,{
               'bg-gray-500 text-white' : i == currPage.value ,
             }]}
           >
@@ -47,7 +47,7 @@ export const Pagination = component$<PaginationProps>((props:PaginationProps) =>
       pages.push(
         <button key={i}
           onClick$={()=> props.toPage(i)}
-          class={[`relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-600 hover:text-neutral-100`,{
+          class={[`relative block rounded px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-600 hover:text-neutral-100`,{
             'bg-gray-500 text-white' : i == currPage.value ,
           }]}
         >

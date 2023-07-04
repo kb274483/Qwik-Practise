@@ -5,7 +5,7 @@ import type { PropFunction } from "@builder.io/qwik"
 export interface PropsData {
   isShow : boolean
   toPage : number
-  data : PropFunction<(data : resData)=>resData>
+  data : PropFunction<(data : resData)=>void>
 }
 export interface resData{
 	data:[]
