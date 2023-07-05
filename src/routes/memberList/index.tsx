@@ -31,6 +31,7 @@ export default component$(() => {
   })
   const searchMember = $(() =>{
     isShow.value = false
+    currentPage.value = 1
     propsFilterID.value = filterID.value
     propsFilterName.value = filterName.value
     propsFilterPhone.value = filterPhone.value
