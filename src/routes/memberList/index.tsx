@@ -1,5 +1,4 @@
-import { component$,useVisibleTask$, useSignal,$ ,useContextProvider} from "@builder.io/qwik";
-import { filterContext } from "../filter-context";
+import { component$,useVisibleTask$, useSignal,$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { MemberList } from "~/components/memberList/memberList"
 import { Pagination } from "~/components/pagination/pagination"
@@ -13,13 +12,11 @@ export default component$(() => {
   const filterID = useSignal("")
   const filterName = useSignal("")
   const filterPhone = useSignal("")
-  const propsFilter = useSignal({
-    id : "",
-    name : "",
-    phone : ""
-  })
+  const propsFilterID = useSignal("")
+  const propsFilterName = useSignal("")
+  const propsFilterPhone = useSignal("")
   const isShow = useSignal(false)
-  const totalPage = useSignal(10)
+  const totalPage = useSignal(1)
   const currentPage = useSignal(1)
   const goToPage = $((num : number)=>{
     currentPage.value = num
@@ -32,7 +29,15 @@ export default component$(() => {
     currentPage.value = data.currentPage
     totalPage.value = data.totalPage
   })
-  useContextProvider(filterContext, propsFilter)
+  const searchMember = $(() =>{
+    isShow.value = false
+    propsFilterID.value = filterID.value
+    propsFilterName.value = filterName.value
+    propsFilterPhone.value = filterPhone.value
+    setTimeout(()=>{
+      isShow.value = true
+    },500)
+  });
   useVisibleTask$(async () => {
     const options = {
       root: null,
@@ -75,11 +80,7 @@ export default component$(() => {
             }} 
           />
           <button
-            onClick$={()=>{
-              propsFilter.value.id = filterID.value
-              propsFilter.value.name = filterName.value
-              propsFilter.value.phone = filterPhone.value
-            }}
+            onClick$={searchMember}
             class={[`block border rounded px-2 py-1 text-lg text-neutral-600 transition-all duration-300 hover:bg-neutral-600 hover:text-neutral-100 cursor-pointer`]}
           >
             搜尋
@@ -87,7 +88,9 @@ export default component$(() => {
         </div>
         <MemberList toPage={currentPage.value}
           isShow={isShow.value} data={initPage}
-          propsFilter={propsFilter.value}
+          propsFilterID={propsFilterID.value}
+          propsFilterName={propsFilterName.value}
+          propsFilterPhone={propsFilterPhone.value}
         >
         </MemberList>
         <Pagination totalPage={totalPage.value} 

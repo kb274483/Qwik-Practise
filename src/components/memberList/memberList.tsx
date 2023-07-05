@@ -1,14 +1,11 @@
-import { component$,useTask$,useStore,useVisibleTask$,useContext } from "@builder.io/qwik";
+import { component$,useTask$,useStore,useVisibleTask$ } from "@builder.io/qwik";
 import { isServer } from '@builder.io/qwik/build';
 import type { PropFunction } from "@builder.io/qwik"
 
-interface propsFilter{
-	id : string
-	name : string
-	phone : string
-}
 export interface PropsData {
-	propsFilter : propsFilter
+	propsFilterID : string
+	propsFilterName : string
+	propsFilterPhone : string
   isShow : boolean
   toPage : number
   data : PropFunction<(data : resData)=>void>
@@ -20,12 +17,11 @@ export interface resData{
 	currentPage:number
 }
 export const MemberList = component$((props : PropsData) => {
-	// const filter = useContext(filterContext);
   const store = useStore({ data :null });
   useTask$(async ({track}) => {
-    track(()=>{props.toPage})
-    if(props.toPage){
-      const response = await fetch(`http://roy_go.casa.art/memberList?page=${props.toPage}`);
+    track(()=>{props.toPage,props.propsFilterID,props.propsFilterName,props.propsFilterPhone})
+    if(props.toPage || props.propsFilterID || props.propsFilterName || props.propsFilterPhone){
+      const response = await fetch(`http://roy_go.casa.art/memberList?page=${props.toPage}&id=${props.propsFilterID}&name=${props.propsFilterName}&phone=${props.propsFilterPhone}`);
       store.data = await response.json();
     }
     if (isServer) {
@@ -33,7 +29,8 @@ export const MemberList = component$((props : PropsData) => {
       store.data = await response.json();
     }
   });
-  useVisibleTask$(()=>{
+  useVisibleTask$(({track})=>{
+		track(()=>{props.isShow})
     store.data != null ? props.data(store.data) : null   
   })
   return (
@@ -48,10 +45,10 @@ export const MemberList = component$((props : PropsData) => {
 				</li>
 			</ul>
 			<ul id="target" 
-				class={['mt-1 mb-4 transition-all duration-1000 ease-in-out relative',
+				class={['mt-1 mb-4 transition-all ease-in-out relative',
 				{
-					'top-20 opacity-0': !props.isShow ,
-					'top-0 opacity-100': props.isShow
+					'top-20 opacity-0 duration-0': !props.isShow ,
+					'top-0 opacity-100 duration-1000': props.isShow
 				}]}
 			>
 			{store.data != null ? 

@@ -1,4 +1,4 @@
-import { component$,useTask$, useSignal } from '@builder.io/qwik';
+import { component$,useTask$, useSignal, } from '@builder.io/qwik';
 import type { PropFunction } from "@builder.io/qwik"
 
 export interface PaginationProps {
@@ -10,7 +10,7 @@ export interface PaginationProps {
 export const Pagination = component$<PaginationProps>((props:PaginationProps) =>{
   const currPage = useSignal(props.currentPage)
   useTask$(async ({track}) => {
-    track(()=>{props.currentPage})
+    track(()=>{props.currentPage,props.totalPage})
     if(props.currentPage){
       currPage.value = props.currentPage
     }
