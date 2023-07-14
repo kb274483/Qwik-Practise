@@ -1,6 +1,7 @@
 import { component$,useTask$,useStore,useVisibleTask$ } from "@builder.io/qwik";
 import { isServer } from '@builder.io/qwik/build';
 import type { PropFunction } from "@builder.io/qwik"
+import { paths } from "../utils/paths";
 
 export interface PropsData {
 	propsFilterID : string
@@ -36,12 +37,13 @@ export const MemberList = component$((props : PropsData) => {
   return (
     <>  
 			<ul class="mt-2 bg-slate-300 rounded">
-				<li class="grid-cols-5 grid gap-2 text-center text-lg">
+				<li class="grid-cols-6 grid gap-2 text-center text-lg py-1 px-2">
 					<span class="text-gray-500">分店</span>
 					<span class="text-gray-500">ID</span>
 					<span class="text-gray-500">姓名</span>
 					<span class="text-gray-500">編號</span>
 					<span class="text-gray-500">電話</span>
+					<span class="text-gray-500">操作</span>
 				</li>
 			</ul>
 			<ul id="target" 
@@ -56,7 +58,7 @@ export const MemberList = component$((props : PropsData) => {
 					return(
 						<li key={item.ID}
 							class={`border border-gray-600 text-gray-500 text-center
-								mb-2 p-2 rounded w-full mx-auto grid-cols-5 grid gap-2
+								mb-2 p-2 rounded w-full mx-auto grid-cols-6 grid gap-2
 							`} 
 						>   
 							<span class={'block font-medium '}>
@@ -73,6 +75,13 @@ export const MemberList = component$((props : PropsData) => {
 							</span>
 							<span class={'block font-medium'}>
 								{item['MemberPhone']}
+							</span>
+							<span class={'block font-medium flex justify-center'}>
+								<a href={paths.memberDetail(item['ID'])}
+								class="bg-teal-700 text-gray-100 py-1 px-2 rounded mx-auto hover:bg-teal-500 transition-all ease-in-out duration-300"
+								>
+									詳細資訊
+								</a>
 							</span>
 						</li>
 					)
