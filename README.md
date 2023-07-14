@@ -1,4 +1,5 @@
-## This is a project for learning Golang to write APIs and also for learning the QWIK framework.
+# This is a project for learning Golang to write APIs and also for learning the QWIK framework.Everything is still a learning 
+# 這是個邊學習用Golang寫API，順便學習QWIK這個新框架的專案，一切都還在摸索
 
 # Qwik City App ⚡️
 
