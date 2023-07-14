@@ -1,3 +1,5 @@
+## This is a project for learning Golang to write APIs and also for learning the QWIK framework.
+
 # Qwik City App ⚡️
 
 - [Qwik Docs](https://qwik.builder.io/)
